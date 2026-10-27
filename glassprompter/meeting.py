@@ -157,8 +157,9 @@ def fmt_clock(secs):
 _Q_START = re.compile(
     r"^(?:so |and |but |okay |ok |well |um |uh |right |also )*"
     r"(?:what|why|how|when|where|who|whom|whose|which|"
-    r"(?:can|could|would|will|should|shall|do|does|did|is|are|was|were|have|has|had|may|might)"
-    r" (?:you|we|i|they|he|she|it|there|this|that|these|those|the|your|our|anyone|anybody|everyone|someone)|"
+    # any subject may follow ("is pricing...", "does onboarding..."); only known statement openers are excluded
+    r"(?:have|has|had) (?!(?:a|an|to|been|got)\b)(?=\w)|"
+    r"(?:can|could|would|will|should|shall|do|does|did|is|are|was|were|may|might) (?!(?:do|be|not)\b)(?=\w)|"
     r"tell me|walk me through|explain|describe|talk me through|any thoughts|thoughts on|"
     r"what's|whats|how's|hows|where's|who's|isn't|aren't|don't|doesn't|didn't|won't|wouldn't|couldn't)\b", re.I)
 _Q_TAIL = re.compile(r"\b(?:right|correct|yeah|no|isn't it|don't you think|you know what i mean|"

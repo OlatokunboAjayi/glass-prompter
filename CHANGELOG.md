@@ -15,7 +15,8 @@
 - **Sign-in can't hang** on an idle browser connection.
 - **Meeting history is safe from two threads** saving at once (live transcript and notes). Searching for `%` or `_`
   now finds them literally.
-- **Smart answers fire less often by mistake:** "have a good weekend" no longer counts as a question.
+- **Smart answers fire less often by mistake:** "have a good weekend" no longer counts as a question,
+  while questions like "is pricing per seat" or "does onboarding come with the plan" are still answered.
 - A hand-edited setting of `"false"` is now read as off.
 - The phone's AI chat ignores malformed messages instead of failing.
 - Internal: large files split into smaller modules (settings, scripts, phone, copilot, prompter), shared platform

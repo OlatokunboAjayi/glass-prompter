@@ -23,10 +23,14 @@ def test_transcript_keeps_the_newest_part_when_long():
 
 def test_questions_are_spotted_without_punctuation():
     for q in ("what does pricing look like", "can you walk me through the setup", "so how long does it take",
-              "tell me about your background", "it works with zoom right", "is that available today?"):
+              "tell me about your background", "it works with zoom right", "is that available today?",
+              "is pricing per seat or per team", "does onboarding come with the plan",
+              "can support help us migrate", "are discounts available for annual", "is a pilot included",
+              "has anyone tried it", "do you offer a pilot"):
         assert meeting.is_question(q), q
     for s in ("thanks everyone", "we shipped it last week", "okay", "the price is fine",
-              "have a great weekend", "will do thanks again"):
+              "have a great weekend", "have a good weekend everyone", "had a great time", "have to go now",
+              "will do thanks again", "could be better"):
         assert not meeting.is_question(s), s
 
 
