@@ -5,7 +5,7 @@
 Requires Python 3.10+ on Windows, macOS or Linux.
 
 ```bash
-git clone https://github.com/tokunboajayi/glass-prompter.git
+git clone https://github.com/OlatokunboAjayi/glass-prompter.git
 cd glass-prompter
 python -m pip install -r requirements.txt
 python glass_prompter.pyw          # starts the app

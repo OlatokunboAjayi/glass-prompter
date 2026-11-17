@@ -12,7 +12,7 @@ UpgradeBehavior: install
 ReleaseDate: 2026-10-07
 Installers:
 - Architecture: x64
-  InstallerUrl: https://github.com/tokunboajayi/glass-prompter/releases/download/v2.6.1/GlassPrompter-Setup-2.6.1.exe
+  InstallerUrl: https://github.com/OlatokunboAjayi/glass-prompter/releases/download/v2.6.1/GlassPrompter-Setup-2.6.1.exe
   InstallerSha256: 00A12555A96EEE8088BDE8DF1E0329BE55F85F5FE4116E18CF11ACC9B3E7EAB2
   ProductCode: '{6F1C2D4E-8B7A-4C3D-9E21-5A7C3B9D0E14}_is1'
 ManifestType: installer

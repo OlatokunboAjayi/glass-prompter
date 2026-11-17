@@ -3,7 +3,7 @@
 ## Reporting a problem
 
 Please **don't** open a public issue for security problems. Report them privately instead:
-[GitHub › Security › Report a vulnerability](https://github.com/tokunboajayi/glass-prompter/security/advisories/new).
+[GitHub › Security › Report a vulnerability](https://github.com/OlatokunboAjayi/glass-prompter/security/advisories/new).
 
 Include what you found, how to reproduce it, and which version you used. You'll get a reply within a few days,
 and a fix is released as soon as it's ready. Thank you for helping keep users safe.

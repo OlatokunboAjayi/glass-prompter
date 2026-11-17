@@ -4,12 +4,12 @@ PackageIdentifier: TokunboAjayi.GlassPrompter
 PackageVersion: 2.6.1
 PackageLocale: en-US
 Publisher: Olatokunbo Ajayi
-PublisherUrl: https://github.com/tokunboajayi
-PublisherSupportUrl: https://github.com/tokunboajayi/glass-prompter/issues
+PublisherUrl: https://github.com/OlatokunboAjayi
+PublisherSupportUrl: https://github.com/OlatokunboAjayi/glass-prompter/issues
 PackageName: Glass Prompter
-PackageUrl: https://tokunboajayi.github.io/glass-prompter/
+PackageUrl: https://olatokunboajayi.github.io/glass-prompter/
 License: MIT
-LicenseUrl: https://github.com/tokunboajayi/glass-prompter/blob/main/LICENSE
+LicenseUrl: https://github.com/OlatokunboAjayi/glass-prompter/blob/main/LICENSE
 Copyright: Copyright (c) 2026 Olatokunbo Ajayi
 ShortDescription: See-through teleprompter under your webcam that follows your voice.
 Description: |-
@@ -24,6 +24,6 @@ Tags:
 - presentation
 - voice
 - video-call
-ReleaseNotesUrl: https://github.com/tokunboajayi/glass-prompter/releases/tag/v2.6.1
+ReleaseNotesUrl: https://github.com/OlatokunboAjayi/glass-prompter/releases/tag/v2.6.1
 ManifestType: defaultLocale
 ManifestVersion: 1.6.0

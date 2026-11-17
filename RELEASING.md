@@ -29,12 +29,12 @@ git add packaging && git commit -m "winget + Homebrew manifests for 2.5.0" && gi
 
 | Channel | How it updates |
 |---|---|
-| **Homebrew** | Copy `packaging/homebrew/Casks/glass-prompter.rb` into the [`tokunboajayi/homebrew-tap`](https://github.com/tokunboajayi/homebrew-tap) repo under `Casks/`, then commit and push. Users then get it with `brew upgrade`. |
+| **Homebrew** | Copy `packaging/homebrew/Casks/glass-prompter.rb` into the [`olatokunboajayi/homebrew-tap`](https://github.com/OlatokunboAjayi/homebrew-tap) repo under `Casks/`, then commit and push. Users then get it with `brew upgrade`. |
 | **winget** | `wingetcreate update TokunboAjayi.GlassPrompter -v 2.5.0 -u <Setup .exe URL> --submit`. Microsoft reviews the PR, usually within 1 to 3 days. Submit only one PR at a time. |
 
 ## 3. The website
 
-- **Address:** <https://tokunboajayi.github.io/glass-prompter/>
+- **Address:** <https://olatokunboajayi.github.io/glass-prompter/>
 - **Source:** `docs/index.html` plus `docs/img/`. GitHub Pages serves it from `docs/` on `main` (*Settings › Pages*).
 - **Updating:** edit `docs/index.html` and push to `main`. It's live within a minute or two.
 - **Download buttons** always point at the latest release. The page asks the GitHub API when it loads, so you don't need to edit the site for a new version.

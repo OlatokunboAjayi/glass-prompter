@@ -5,10 +5,10 @@ cask "glass-prompter" do
   sha256 arm:   "213ba8bf553a88a6d40d8a75b6552f125cc9e60d13b64cb8768039441d2c401a",
          intel: "5cb27e48d728d156cf354d2201feb498606fab1391917f4f41331fe5f4eb9ba6"
 
-  url "https://github.com/tokunboajayi/glass-prompter/releases/download/v#{version}/GlassPrompter-#{version}-macOS-#{arch}.dmg"
+  url "https://github.com/OlatokunboAjayi/glass-prompter/releases/download/v#{version}/GlassPrompter-#{version}-macOS-#{arch}.dmg"
   name "Glass Prompter"
   desc "See-through teleprompter under your webcam that follows your voice"
-  homepage "https://tokunboajayi.github.io/glass-prompter/"
+  homepage "https://olatokunboajayi.github.io/glass-prompter/"
 
   livecheck do
     url :url

@@ -12,10 +12,10 @@ import os
 import sys
 import urllib.request
 
-REPO = "tokunboajayi/glass-prompter"
+REPO = "OlatokunboAjayi/glass-prompter"
 ID = "TokunboAjayi.GlassPrompter"
 PRODUCT_CODE = "{6F1C2D4E-8B7A-4C3D-9E21-5A7C3B9D0E14}_is1"        # Inno AppId + _is1
-HOME = "https://tokunboajayi.github.io/glass-prompter/"
+HOME = "https://olatokunboajayi.github.io/glass-prompter/"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -73,7 +73,7 @@ ManifestVersion: 1.6.0
 PackageVersion: {version}
 PackageLocale: en-US
 Publisher: Olatokunbo Ajayi
-PublisherUrl: https://github.com/tokunboajayi
+PublisherUrl: https://github.com/OlatokunboAjayi
 PublisherSupportUrl: https://github.com/{REPO}/issues
 PackageName: Glass Prompter
 PackageUrl: {HOME}

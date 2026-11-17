@@ -200,7 +200,7 @@ def _auth_headers(pid, p, key):
         return {"x-goog-api-key": key}
     h = {"authorization": "Bearer " + key} if key else {}
     if pid == "openrouter":
-        h.update({"HTTP-Referer": "https://tokunboajayi.github.io/glass-prompter/", "X-Title": "Glass Prompter"})
+        h.update({"HTTP-Referer": "https://olatokunboajayi.github.io/glass-prompter/", "X-Title": "Glass Prompter"})
     return h
 
 

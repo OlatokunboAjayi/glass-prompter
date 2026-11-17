@@ -9,12 +9,12 @@ It follows your voice word by word, reads your script aloud, and stays off the s
 **New in 2.7:** a meeting copilot that transcribes both sides of a call, tells you what to say (Ctrl+Alt+Enter from any app) and writes your notes and follow-up email, all invisible on screen share. Plus the 2.6 AI assistant that works with any AI provider and can see your screen.
 Free and open source (MIT) for Windows and Mac. **Public beta:** feedback is very welcome.
 
-### [Download from the website &rarr;](https://tokunboajayi.github.io/glass-prompter/)
+### [Download from the website &rarr;](https://olatokunboajayi.github.io/glass-prompter/)
 
-[Website](https://tokunboajayi.github.io/glass-prompter/) &nbsp;&middot;&nbsp;
-[All downloads](https://github.com/tokunboajayi/glass-prompter/releases/latest) &nbsp;&middot;&nbsp;
+[Website](https://olatokunboajayi.github.io/glass-prompter/) &nbsp;&middot;&nbsp;
+[All downloads](https://github.com/OlatokunboAjayi/glass-prompter/releases/latest) &nbsp;&middot;&nbsp;
 [What's new](CHANGELOG.md) &nbsp;&middot;&nbsp;
-[Report a problem](https://github.com/tokunboajayi/glass-prompter/issues/new/choose) &nbsp;&middot;&nbsp;
+[Report a problem](https://github.com/OlatokunboAjayi/glass-prompter/issues/new/choose) &nbsp;&middot;&nbsp;
 [Privacy & security](SECURITY.md)
 
 <img src="docs/img/hero.jpg" width="900" alt="Glass Prompter under a webcam during a video call">
@@ -38,20 +38,20 @@ Free and open source (MIT) for Windows and Mac. **Public beta:** feedback is ver
 
 ## Install
 
-The quickest way is the **[website](https://tokunboajayi.github.io/glass-prompter/)**. It detects your computer and gives you the right download button.
+The quickest way is the **[website](https://olatokunboajayi.github.io/glass-prompter/)**. It detects your computer and gives you the right download button.
 
 | Your computer | Download | Or one command |
 |---|---|---|
-| **Windows 10 (2004+) / 11**, 64-bit | [`GlassPrompter-Setup-x.y.z.exe`](https://github.com/tokunboajayi/glass-prompter/releases/latest) | `winget install TokunboAjayi.GlassPrompter` (in review at Microsoft) |
-| **Mac with Apple silicon** (M1 to M4), macOS 13+ | [`GlassPrompter-x.y.z-macOS-arm64.dmg`](https://github.com/tokunboajayi/glass-prompter/releases/latest) | `brew install --cask tokunboajayi/tap/glass-prompter` |
-| **Mac with Intel**, macOS 13+ | [`GlassPrompter-x.y.z-macOS-x86_64.dmg`](https://github.com/tokunboajayi/glass-prompter/releases/latest) | same Homebrew command |
+| **Windows 10 (2004+) / 11**, 64-bit | [`GlassPrompter-Setup-x.y.z.exe`](https://github.com/OlatokunboAjayi/glass-prompter/releases/latest) | `winget install TokunboAjayi.GlassPrompter` (in review at Microsoft) |
+| **Mac with Apple silicon** (M1 to M4), macOS 13+ | [`GlassPrompter-x.y.z-macOS-arm64.dmg`](https://github.com/OlatokunboAjayi/glass-prompter/releases/latest) | `brew install --cask olatokunboajayi/tap/glass-prompter` |
+| **Mac with Intel**, macOS 13+ | [`GlassPrompter-x.y.z-macOS-x86_64.dmg`](https://github.com/OlatokunboAjayi/glass-prompter/releases/latest) | same Homebrew command |
 | **Linux** | not packaged yet | [run from source](#linux-from-source) |
 
 > Not sure which Mac you have? Open the Apple menu &rsaquo; **About This Mac**. If it says *Chip: Apple M…*, you have Apple silicon. If it says *Processor: Intel*, you have an Intel Mac.
 
 ### Windows
 
-1. Download **`GlassPrompter-Setup-x.y.z.exe`** from the [website](https://tokunboajayi.github.io/glass-prompter/).
+1. Download **`GlassPrompter-Setup-x.y.z.exe`** from the [website](https://olatokunboajayi.github.io/glass-prompter/).
 2. Double-click it. It installs just for you, so no admin password is needed.
 3. If you see **"Windows protected your PC"**, click **More info**, then **Run anyway**. The app isn't code-signed yet, which is why Windows shows this warning for new apps.
 4. Glass Prompter opens and appears in your Start menu. Choose **Start at login** in Settings if you want it to open with Windows.
@@ -66,7 +66,7 @@ winget install TokunboAjayi.GlassPrompter
 
 ### Mac
 
-1. Download the **.dmg** for your chip from the [website](https://tokunboajayi.github.io/glass-prompter/).
+1. Download the **.dmg** for your chip from the [website](https://olatokunboajayi.github.io/glass-prompter/).
 2. Open it and drag **Glass Prompter** into **Applications**.
 3. **The first time only:** right-click Glass Prompter in Applications and choose **Open**, then **Open** again.
    On **macOS 15 or later**, open **System Settings &rsaquo; Privacy & Security**, scroll down, and click **Open Anyway**.
@@ -76,7 +76,7 @@ winget install TokunboAjayi.GlassPrompter
 **With Homebrew.** Open *Terminal* and run:
 
 ```bash
-brew install --cask tokunboajayi/tap/glass-prompter
+brew install --cask olatokunboajayi/tap/glass-prompter
 ```
 
 ### Linux (from source)
@@ -84,7 +84,7 @@ brew install --cask tokunboajayi/tap/glass-prompter
 Linux works, but some features aren't available there: there's no screen-share hiding and no global shortcuts. You need Python 3.10 or newer.
 
 ```bash
-git clone https://github.com/tokunboajayi/glass-prompter.git
+git clone https://github.com/OlatokunboAjayi/glass-prompter.git
 cd glass-prompter
 python3 -m pip install -r requirements.txt
 python3 glass_prompter.pyw
@@ -272,11 +272,11 @@ Another app is probably using the same keys. For example, PowerToys often uses <
 
 <details><summary><b>Windows says "Windows protected your PC" / Mac says the app can't be opened</b></summary>
 
-The app isn't code-signed yet. See step 3 of [Windows](#windows) or [Mac](#mac). You can check any download against the `.sha256.txt` file next to it on the [releases page](https://github.com/tokunboajayi/glass-prompter/releases/latest).
+The app isn't code-signed yet. See step 3 of [Windows](#windows) or [Mac](#mac). You can check any download against the `.sha256.txt` file next to it on the [releases page](https://github.com/OlatokunboAjayi/glass-prompter/releases/latest).
 
 </details>
 
-Still stuck? In the app's menu choose **Report a problem**. It opens a GitHub form with your app version and system already filled in (nothing personal). Or [open one here](https://github.com/tokunboajayi/glass-prompter/issues/new/choose). Logs are under **About Glass Prompter › Open logs**; check them for anything private before attaching. Security problems: please [report privately](SECURITY.md).
+Still stuck? In the app's menu choose **Report a problem**. It opens a GitHub form with your app version and system already filled in (nothing personal). Or [open one here](https://github.com/OlatokunboAjayi/glass-prompter/issues/new/choose). Logs are under **About Glass Prompter › Open logs**; check them for anything private before attaching. Security problems: please [report privately](SECURITY.md).
 
 ---
 
@@ -294,7 +294,7 @@ tests/           pytest suite                     packaging/   installers, winge
 tools/           screenshots and self-tests       skills/      script-writing guide for AI assistants
 ```
 
-**Website:** <https://tokunboajayi.github.io/glass-prompter/>. It's served from the [`docs/`](docs/) folder on `main`, and every push to `main` updates it within a minute or two.
+**Website:** <https://olatokunboajayi.github.io/glass-prompter/>. It's served from the [`docs/`](docs/) folder on `main`, and every push to `main` updates it within a minute or two.
 
 ---
 

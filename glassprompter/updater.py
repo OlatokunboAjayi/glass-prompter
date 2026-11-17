@@ -23,7 +23,7 @@ from . import __version__
 
 log = logging.getLogger(__name__)
 
-REPO = "tokunboajayi/glass-prompter"
+REPO = "OlatokunboAjayi/glass-prompter"
 API = "https://api.github.com/repos/%s/releases/latest" % REPO
 PAGE = "https://github.com/%s/releases/latest" % REPO
 CHECK_EVERY = 24 * 3600

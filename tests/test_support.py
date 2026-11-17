@@ -17,7 +17,7 @@ def _query(url):
 
 def test_bug_link_is_prefilled_with_version_and_system():
     url = support.report_url("bug", True)
-    assert url.startswith("https://github.com/tokunboajayi/glass-prompter/issues/new?")
+    assert url.startswith("https://github.com/OlatokunboAjayi/glass-prompter/issues/new?")
     q = _query(url)
     assert q["template"] == ["bug_report.yml"] and q["version"] == [__version__]
     assert "Glass Prompter " + __version__ in q["system"][0] and "Hidden from screen share: yes" in q["system"][0]
