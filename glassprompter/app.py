@@ -30,7 +30,7 @@ HOTKEYS = {1: ("SPACE", "play"), 2: ("UP", "faster"), 3: ("DOWN", "slower"), 4: 
            5: ("RIGHT", "ahead"), 6: ("R", "restart"), 7: ("H", "toggle"), 8: ("E", "library"),
            9: ("V", "voice"), 10: ("G", "ghost"), 11: ("PGUP", "prev_section"), 12: ("PGDN", "next_section"),
            13: ("LBRACKET", "ghost_less"), 14: ("RBRACKET", "ghost_more"), 15: ("ENTER", "assist"),
-           16: ("M", "meeting")}
+           16: ("M", "meeting"), 17: ("BACKSLASH", "toggle")}
 assert all(k in native.HOTKEY_KEYS for k, _ in HOTKEYS.values())
 DROP_EXT = (".txt", ".md", ".docx")
 WELCOME_SCRIPT = """Welcome to Glass Prompter.
@@ -762,7 +762,7 @@ class Controller(QObject):
             self.open_copilot(focus=False)
             return self.copilot.toggle_meeting()
         if action == "toggle":
-            return p.toggle_window()
+            return self.toggle_everything()
         if action == "library":
             return self.open_library()
         if action == "ghost":
@@ -779,6 +779,25 @@ class Controller(QObject):
             p.show_window()
         {"play": p.toggle_play, "faster": lambda: p.change_wpm(10), "slower": lambda: p.change_wpm(-10),
          "back": lambda: p.nudge(-2), "ahead": lambda: p.nudge(2), "restart": p.restart}[action]()
+
+    def toggle_everything(self):
+        """Ctrl+Alt+H or Ctrl+Alt+\\ (Cluely's Ctrl+\\): hide every Glass Prompter window at once, then bring back
+        exactly the ones that were showing. With nothing hidden and nothing showing, it opens the prompter."""
+        hidden = [w for w in getattr(self, "_hidden_windows", []) if w is not None]
+        self._hidden_windows = []
+        if hidden:
+            for w in hidden:
+                w.show_window() if w is self.prompter else w.show()
+            return None
+        shown = [w for w in QApplication.topLevelWidgets()
+                 if w.isVisible() and w.isWindow() and w.windowType() in (Qt.WindowType.Window, Qt.WindowType.Dialog,
+                                                                         Qt.WindowType.Tool)]
+        if not shown:
+            return self.prompter.show_window()
+        for w in shown:
+            w.hide_window() if w is self.prompter else w.hide()
+        self._hidden_windows = shown
+        return None
 
     # ------------------------------------------------------------ dialogs
     def show_dialog(self, dlg):

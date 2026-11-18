@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.8.0 - 2026-11-18
+**The copilot hears far better, and one key hides everything.**
+
+- **Whisper transcription for the meeting copilot.** The copilot now transcribes with a local Whisper model
+  (the approach of the open-source OpenWhispr). It runs on your computer and downloads its 142 MB model once.
+  In a noisy-room test it made about 4× fewer word errors than the old engine, and it adds punctuation, so
+  questions are spotted more reliably. Pick Tiny, Base or Small (and any-language versions) in Copilot context ›
+  Speech. The old offline engine stays as the fallback.
+- **Names & terms.** List people, products and jargon, and Whisper spells them right ("Salesforce", not "sales force").
+- **Hide everything:** Ctrl+Alt+\ (Ctrl+Option+\ on Mac), or Ctrl+Alt+H, now hides every Glass Prompter window at
+  once (prompter, copilot, settings), then brings back exactly the ones that were open.
+- **Clear the copilot:** Ctrl+R in the copilot forgets its answers and follow-ups; a live meeting keeps transcribing.
+- **Answers in your language:** choose the language the AI answers in, whatever language the meeting is in.
+- **Glass by default:** new installs start with see-through windows. Change it in Settings › Windows.
+
 ## 2.7.5 - 2026-10-20
 **Security and reliability fixes from a full code review.**
 

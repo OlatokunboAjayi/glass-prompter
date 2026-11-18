@@ -28,7 +28,8 @@ QT_EXCLUDES = [
     "PySide6.QtHelp", "PySide6.QtPrintSupport", "PySide6.QtConcurrent", "PySide6.QtStateMachine",
 ]
 hidden = ["qrcode", "qrcode.constants", "vosk", "sounddevice", "_sounddevice_data", "cffi", "piper", "piper.voice",
-          "piper.config", "piper.phonemize_espeak", "piper.espeakbridge", "onnxruntime"]
+          "piper.config", "piper.phonemize_espeak", "piper.espeakbridge", "onnxruntime",
+          "faster_whisper", "ctranslate2", "tokenizers", "huggingface_hub"]   # copilot transcription (Whisper)
 if MAC:
     hidden += ["objc", "AppKit", "Foundation", "glassprompter.platform.macos"]
 else:
@@ -47,13 +48,15 @@ if not any(os.path.basename(f).startswith("libvosk.") for f, _ in VOSK_LIBS):
 a = Analysis(
     [os.path.join(ROOT, "glass_prompter.pyw")],
     pathex=[ROOT],
-    binaries=VOSK_LIBS + collect_dynamic_libs("piper") + collect_dynamic_libs("onnxruntime"),
+    binaries=VOSK_LIBS + collect_dynamic_libs("piper") + collect_dynamic_libs("onnxruntime")
+             + collect_dynamic_libs("ctranslate2"),
     datas=[(os.path.join(ROOT, "glassprompter", "server", "static"), os.path.join("glassprompter", "server", "static")),
            (MODEL, os.path.join("glassprompter", "models", MODEL_NAME)),
            (os.path.join(ROOT, "glassprompter", "fonts"), os.path.join("glassprompter", "fonts")),
            (VOICE, os.path.join("glassprompter", "voices")),
            (VOICE + ".json", os.path.join("glassprompter", "voices"))]
           + collect_data_files("_sounddevice_data")
+          + collect_data_files("faster_whisper")      # the Silero voice detector (silero_vad_v6.onnx)
           + collect_data_files("piper", excludes=["train/**", "tashkeel/**", "hebrew/**", "img/**", "templates/**"]),
     hiddenimports=hidden,
     excludes=QT_EXCLUDES + ["tkinter", "unittest", "pytest", "pydoc", "PIL", "piper.train", "torch"],

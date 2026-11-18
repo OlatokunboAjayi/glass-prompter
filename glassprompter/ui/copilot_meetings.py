@@ -152,7 +152,8 @@ class Meetings(BaseDialog):
         s = self.c.cfg.s
         tr = meeting.Transcript(m["segments"], m["started"])
         ctx = meeting.build_context(m.get("mode") or s.copilot_mode, s.copilot_modes, tr,
-                                    meeting.read_knowledge(s.copilot_files), s.copilot_notes)
+                                    meeting.read_knowledge(s.copilot_files), s.copilot_notes,
+                                    s.copilot_language)
         self.view.setMarkdown("_Writing meeting notes" + ELLIPSIS + "_")
         _ask(self.c, "notes", [{"role": "user", "content": meeting.NOTES_PROMPT}], ctx, None,
              meeting.NOTES_TOKENS, False, self.relay, meeting_id=m["id"])

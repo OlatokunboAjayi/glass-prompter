@@ -4,10 +4,14 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QComboBox, QFileDialog, QFrame, QHBoxLayout, QLineEdit, QListWidget, QListWidgetItem,
                                QPlainTextEdit, QScrollArea, QVBoxLayout, QWidget)
 
-from .. import meeting, paths
+from .. import meeting, paths, whisper_stt
 from .copilot import _btn
 from .dialogs import BaseDialog, Card, _section, button, label
 from .theme import ELLIPSIS, T
+
+
+ANSWER_LANGUAGES = ("English", "Spanish", "French", "German", "Portuguese", "Italian", "Dutch", "Polish", "Turkish",
+                    "Arabic", "Hindi", "Chinese", "Japanese", "Korean", "Yoruba")
 
 
 class Setup(BaseDialog):
@@ -100,18 +104,29 @@ class Setup(BaseDialog):
         card.lay.addLayout(mb)
         _section(root, card, "Custom modes")
 
-        speech = paths.speech_models()
-        self.speech = None
-        if len(speech) > 1:
-            card = Card()
-            self.speech = QComboBox()
-            self.speech.setAccessibleName("Speech language model")
-            self.speech.addItem("Default (English)", "")
-            for name in speech:
-                self.speech.addItem(name, name)
-            self.speech.setCurrentIndex(max(0, self.speech.findData(s.copilot_model)))
-            card.row("Language", self.speech, "Speech models in the data folder's models folder.")
-            _section(root, card, "Speech")
+        card = Card()
+        self.speech = QComboBox()
+        self.speech.setAccessibleName("Speech engine")
+        self.speech.addItem("Recommended", "")
+        if whisper_stt.available():
+            for size, (name, mb) in whisper_stt.SIZES.items():
+                self.speech.addItem("%s %s %d MB" % (name, chr(0xB7), mb), whisper_stt.PREFIX + size)
+        for name in paths.speech_models():
+            self.speech.addItem("Vosk %s %s" % (chr(0xB7), name), name)
+        self.speech.setCurrentIndex(max(0, self.speech.findData(s.copilot_model)))
+        card.row("Engine", self.speech, "Whisper runs on this computer and downloads its model once.")
+        self.vocab = QLineEdit(s.copilot_vocabulary)
+        self.vocab.setAccessibleName("Names and words to spell right")
+        self.vocab.setPlaceholderText("e.g. Tanay, Acme, HubSpot, SOC 2")
+        card.row("Names & terms", self.vocab, "Helps Whisper spell people, products and jargon right.")
+        self.lang = QComboBox()
+        self.lang.setAccessibleName("Answer language")
+        self.lang.addItem("Same as the conversation", "")
+        for name in ANSWER_LANGUAGES:
+            self.lang.addItem(name, name)
+        self.lang.setCurrentIndex(max(0, self.lang.findData(s.copilot_language)))
+        card.row("Answers in", self.lang, "The language the AI writes its answers and notes in.")
+        _section(root, card, "Speech")
 
         root.addStretch(1)
         self.area = QScrollArea()
@@ -187,7 +202,8 @@ class Setup(BaseDialog):
         s = self.c.cfg.s
         s.copilot_notes = self.notes.toPlainText().strip()
         s.copilot_files = [self.files.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.files.count())]
-        if self.speech is not None:
-            s.copilot_model = self.speech.currentData() or ""
+        s.copilot_model = self.speech.currentData() or ""
+        s.copilot_vocabulary = self.vocab.text().strip()
+        s.copilot_language = self.lang.currentData() or ""
         self.c.cfg.save()
         self.accept()

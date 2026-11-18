@@ -399,7 +399,7 @@ class Copilot(BaseDialog):
         self.meeting_id = self.store.create(self.transcript.started, s.copilot_mode)
         self.chat = []
         self.live.clear()
-        self.listener.start(s.mic_device, self.sys_audio.isChecked(), s.copilot_model)
+        self.listener.start(s.mic_device, self.sys_audio.isChecked(), s.copilot_model, s.copilot_vocabulary)
         self._start_style(True)
         self.refresh_info()
         self.c.schedule_publish()
@@ -428,7 +428,8 @@ class Copilot(BaseDialog):
         self.answer.setPlainText("Writing your meeting notes and follow-up email" + ELLIPSIS)
         s = self.c.cfg.s
         ctx = meeting.build_context(s.copilot_mode, s.copilot_modes, tr,
-                                    meeting.read_knowledge(s.copilot_files), s.copilot_notes)
+                                    meeting.read_knowledge(s.copilot_files), s.copilot_notes,
+                                    s.copilot_language)
         _ask(self.c, "notes", [{"role": "user", "content": meeting.NOTES_PROMPT}], ctx, None,
              meeting.NOTES_TOKENS, False, self.relay, meeting_id=mid)
 
@@ -495,7 +496,8 @@ class Copilot(BaseDialog):
     def _context(self):
         s = self.c.cfg.s
         return meeting.build_context(s.copilot_mode, s.copilot_modes, self.transcript,
-                                     meeting.read_knowledge(s.copilot_files), s.copilot_notes)
+                                     meeting.read_knowledge(s.copilot_files), s.copilot_notes,
+                                    s.copilot_language)
 
     def _set_busy(self, on, what=""):
         self.busy = on
@@ -572,6 +574,14 @@ class Copilot(BaseDialog):
         question, self._pending_q = self._pending_q, ""
         self.answered.emit(badge, text, question)
 
+    def clear_session(self):
+        """Ctrl+R, as in Cluely: forget the answers and typed follow-ups. A live meeting keeps transcribing."""
+        self.answers, self.ans_i, self.chat = [], -1, []
+        self.badge.setText("")
+        self.answer.clear()
+        self._update_history_nav()
+        self.show_note("Cleared. The AI starts fresh from here.")
+
     def show_answer(self, i):
         if not self.answers:
             return
@@ -619,7 +629,7 @@ class Copilot(BaseDialog):
     def _shortcuts(self):
         from PySide6.QtGui import QKeySequence, QShortcut
         keys = [("Ctrl+Return", lambda: self.run_action("assist")), ("Ctrl+Enter", lambda: self.run_action("assist")),
-                ("Ctrl+B", self.toggle_compact), ("Ctrl+L", self._focus_ask),
+                ("Ctrl+B", self.toggle_compact), ("Ctrl+L", self._focus_ask), ("Ctrl+R", self.clear_session),
                 ("Alt+Left", lambda: self.show_answer(self.ans_i - 1)),
                 ("Alt+Right", lambda: self.show_answer(self.ans_i + 1))]
         keys += [("Ctrl+%d" % (i + 1), (lambda a=aid: self.run_action(a))) for i, (aid, _n) in enumerate(CHIPS)]

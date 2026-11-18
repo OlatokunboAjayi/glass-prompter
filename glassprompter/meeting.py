@@ -210,9 +210,11 @@ COPILOT_SYSTEM = (
     "facts. If you don't know, say so in a few words.")
 
 
-def build_context(mode_id, raw_custom, transcript, knowledge=(), extra=""):
+def build_context(mode_id, raw_custom, transcript, knowledge=(), extra="", language=""):
     """The system-prompt text added for every copilot request: mode, notes, knowledge files, transcript."""
     parts = [COPILOT_SYSTEM, "Mode: %s. %s" % (mode_name(mode_id, raw_custom), mode_prompt(mode_id, raw_custom))]
+    if (language or "").strip():
+        parts.append("Always write your answers in %s, whatever language the conversation is in." % language.strip())
     if (extra or "").strip():
         parts.append("The user's notes for this conversation:\n<notes>\n%s\n</notes>" % extra.strip()[:8000])
     for name, text in knowledge or ():

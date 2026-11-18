@@ -49,10 +49,13 @@ class Settings:
     copilot_system_audio: bool = True                  # also transcribe the computer's sound (the other side)
     copilot_smart: bool = True                         # suggest an answer when someone asks you a question
     copilot_screen: bool = True                        # actions may include a screenshot
-    copilot_model: str = ""                            # speech model folder name; "" = the bundled English one
+    copilot_model: str = ""                            # "" = Whisper Base (or Vosk without faster-whisper),
+                                                       # "whisper:<size>", or a Vosk model folder name
+    copilot_vocabulary: str = ""                       # names and jargon that steer Whisper's spelling
+    copilot_language: str = ""                         # language the AI answers in; "" = the conversation's
     copilot_consent_seen: bool = False
     copilot_compact: bool = False                      # the copilot as a slim bar: status, Assist, latest answer
-    window_glass: float = 1.0                          # see-through level of every window (1 = solid)
+    window_glass: float = 0.7                          # see-through level of every window (1 = solid, 0.7 = Glass)
     glass_solid_hover: bool = True                     # see-through windows turn solid under the mouse
     window_geometry: dict = field(default_factory=dict)  # saved position/size per window
     assistant_suggest: bool = True                     # AI assistant: suggest answers/questions while it listens
