@@ -9,8 +9,9 @@ import subprocess
 import sys
 import time
 
-CHECKS = ("speech_model", "voice_follow", "read_aloud_voice", "read_aloud_synth", "audio_devices", "audio_out")
-REQUIRED = ("speech_model", "voice_follow", "read_aloud_voice", "read_aloud_synth")
+CHECKS = ("speech_model", "voice_follow", "whisper_vad", "whisper_decode", "read_aloud_voice", "read_aloud_synth",
+          "audio_devices", "audio_out")
+REQUIRED = ("speech_model", "voice_follow", "whisper_vad", "whisper_decode", "read_aloud_voice", "read_aloud_synth")
 
 
 def _one(name):
@@ -28,6 +29,17 @@ def _one(name):
         rec.AcceptWaveform(b"\0\0" * 16000)               # one second of silence
         rec.FinalResult()
         return "recognizer ran (vosk %s)" % getattr(vosk, "__version__", "?")
+    if name == "whisper_vad":                             # the bundled Silero detector (onnxruntime) loads and runs
+        import numpy as np
+        from faster_whisper.vad import get_speech_timestamps
+        return "%d speech spans in 1 s of silence" % len(get_speech_timestamps(np.zeros(16000, dtype=np.float32)))
+    if name == "whisper_decode":                          # CTranslate2's native library decodes with a real model
+        import numpy as np
+        from . import whisper_stt
+        t0 = time.time()
+        dec = whisper_stt.Decoder(whisper_stt.load("tiny.en"), "en", "", lambda *_: None, lambda *_: None)
+        text = dec.transcribe(np.zeros(32000, dtype=np.float32))
+        return "tiny.en decoded 2 s of silence as %r in %.1fs" % (text, time.time() - t0)
     if name == "read_aloud_voice":
         from . import tts
         f = tts.voice_file(tts.DEFAULT_VOICE)
