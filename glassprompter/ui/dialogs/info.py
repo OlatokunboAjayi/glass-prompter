@@ -1,4 +1,6 @@
 """About and first-run welcome dialogs."""
+import os
+
 from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QFrame, QGridLayout, QHBoxLayout, QVBoxLayout
@@ -21,7 +23,8 @@ class AboutDialog(BaseDialog):
         lay.addWidget(label("A see-through teleprompter that sits under your webcam, so you can read your script "
                             "and keep eye contact on calls, demos and videos, with an AI assistant and a meeting "
                             "copilot that stay off the screen share.", None, True))
-        lay.addWidget(label("Your scripts and settings stay on this computer:\n" + paths.data_dir(), "muted", True))
+        where = paths.data_dir().replace(os.sep, os.sep + "​")   # a long path may wrap after any folder
+        lay.addWidget(label("Your scripts and settings stay on this computer:\n" + where, "muted", True))
         lay.addWidget(label("This is a public beta. Found a bug or have an idea? Report a problem opens a "
                             "pre-filled GitHub issue with your app version and OS only.", "muted", True))
         row = QHBoxLayout()

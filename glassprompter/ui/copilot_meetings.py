@@ -26,7 +26,7 @@ class Meetings(BaseDialog):
         self.relay = _Relay()
         self.relay.done.connect(self._renotes)
         self.resize(900, 640)
-        self.setMinimumSize(720, 480)
+        self.setMinimumSize(720, 0)                      # the layout sets the real minimum height
         root = QHBoxLayout(self)
         root.setContentsMargins(20, 16, 20, 18)
         root.setSpacing(14)

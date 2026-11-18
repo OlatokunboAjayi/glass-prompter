@@ -70,7 +70,7 @@ def make_assistant(controller):
             self.cp = None                    # the copilot whose meeting we're listening through
             self.owns = False                 # we started that meeting, so stopping here ends it
             self.resize(580, 720)
-            self.setMinimumSize(460, 520)
+            self.setMinimumSize(460, 0)                  # the layout sets the real minimum height
 
             root = QVBoxLayout(self)
             root.setContentsMargins(20, 18, 20, 18)

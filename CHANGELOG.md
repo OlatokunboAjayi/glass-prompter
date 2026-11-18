@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.8.1 - 2026-11-18
+**Windows that fit your screen, and corners you can actually grab.**
+
+- **Resize from any corner.** The rounded corners of every window (and the prompter) let clicks fall through to
+  whatever was behind them, so grabbing a corner to resize did nothing. Now the whole frame catches the mouse.
+- **Right-sized windows.** A window first opens at no more than 80% of the screen's width and 85% of its height,
+  and never smaller than its content needs. On small or scaled laptop screens (like 1366×768 at 125%) no window
+  runs off the bottom any more: the copilot, copilot context, AI assistant and meeting history all fit.
+- About wraps a long data-folder path instead of cutting it off.
+- Every installer now proves Whisper transcription works inside the built app before it's published.
+
 ## 2.8.0 - 2026-11-18
 **The copilot hears far better, and one key hides everything.**
 

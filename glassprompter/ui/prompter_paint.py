@@ -17,6 +17,7 @@ class PrompterPaint:
         w, h = float(self.width()), float(self.height())
         clear = self.cfg.clear_mode
         p = QPainter(self)
+        p.fillRect(self.rect(), QColor(0, 0, 0, 1))   # invisible, but keeps the rounded corners grabbable for resizing
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         p.setRenderHint(QPainter.RenderHint.TextAntialiasing)
         rad = RADIUS if self.frosted else T.radius

@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QComboBox, QFileDialog, QFrame, QHBoxLayout, QLin
 from .. import meeting, paths, whisper_stt
 from .copilot import _btn
 from .dialogs import BaseDialog, Card, _section, button, label
+from . import glass
 from .theme import ELLIPSIS, T
 
 
@@ -148,8 +149,8 @@ class Setup(BaseDialog):
         super().showEvent(e)
         body = self.area.widget()                    # tall enough for every card, unless the screen isn't
         want = body.heightForWidth(self.area.viewport().width()) + (self.height() - self.area.height())
-        screen = self.screen().availableGeometry().height() if self.screen() else want
-        self.resize(self.width(), max(480, min(want, screen - 40)))
+        room = int(glass.usable_rect(self.screen()).height() * glass.FIT_H) if self.screen() else want  # like every window
+        self.resize(self.width(), min(room, max(480, want)))
 
     def add_files(self):
         files, _ = QFileDialog.getOpenFileNames(self, "Add knowledge files", paths.documents_dir(),

@@ -130,6 +130,7 @@ class Switch(QCheckBox):
 
 GLASS_LEVELS = ((1.0, "Solid"), (0.7, "Glass"), (0.4, "Clear"))
 TASKBAR_ROOM = 48            # keep clear of an auto-hidden Windows taskbar, which the OS doesn't report
+FIT_W, FIT_H = 0.8, 0.85     # a window first opens no bigger than this share of the screen (content minimum wins)
 
 
 def usable_rect(screen):
@@ -261,9 +262,16 @@ class GlassDialog(QDialog):
         else:
             screen = QGuiApplication.screenAt(QCursor.pos()) or QGuiApplication.primaryScreen()
             a = usable_rect(screen)
+            if self.resizable:                            # first open: comfortable for this screen, never wall-to-wall
+                need = self.layout().totalMinimumSize() if self.layout() else self.minimumSizeHint()
+                self.resize(min(self.width(), max(int(a.width() * FIT_W), need.width())),
+                            min(self.height(), max(int(a.height() * FIT_H), need.height())))
             x = a.center().x() - self.width() // 2
             y = a.top() + max(8, (a.height() - self.height()) // 3)
         area = usable_rect(screen).adjusted(8, 8, -8, -8)
+        if self.minimumWidth() > area.width() or self.minimumHeight() > area.height():
+            # small or scaled screen: Qt won't resize below the minimum, so lower it or the window runs off-screen
+            self.setMinimumSize(min(self.minimumWidth(), area.width()), min(self.minimumHeight(), area.height()))
         w, h = min(self.width(), area.width()), min(self.height(), area.height())
         if (w, h) != (self.width(), self.height()):
             self.resize(w, h)
@@ -330,6 +338,10 @@ class GlassDialog(QDialog):
 
     def paintEvent(self, e):
         p = QPainter(self)
+        if self.resizable:
+            # Windows sends clicks on fully transparent pixels to the window behind: an invisible tint keeps the
+            # rounded corners (where you grab to resize) part of this window
+            p.fillRect(self.rect(), QColor(0, 0, 0, 1))
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         r = QRectF(0.5, 0.5, self.width() - 1, self.height() - 1)
         lvl = self.effective_level()

@@ -1,7 +1,7 @@
 """Live test of the meeting copilot's listener: plays meeting lines through the speakers (Windows voice) and checks
 what the listener transcribes from the system audio ("Them"). Run once per engine:
-    python tools/live_copilot_test.py whisper:base.en
-    python tools/live_copilot_test.py vosk-model-small-en-us-0.15
+    python tools/live_copilot_check.py whisper:base.en
+    python tools/live_copilot_check.py vosk-model-small-en-us-0.15
 """
 import os
 import subprocess

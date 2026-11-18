@@ -138,6 +138,9 @@ def transcript_html(tr, limit=200):
     return "".join(rows)
 
 
+FULL_MIN = (540, 0)
+
+
 class Copilot(BaseDialog):
     # The one meeting engine: the AI assistant listens through it too, and shows every answer it produces.
     answered = Signal(str, str, str)          # (badge, answer, the question that triggered it, or "")
@@ -168,7 +171,7 @@ class Copilot(BaseDialog):
         self.ans_i = -1
         self._full_size = None
         self.resize(580, 780)
-        self.setMinimumSize(540, 700)
+        self.setMinimumSize(*FULL_MIN)                # the layout sets the real minimum height
 
         root = QVBoxLayout(self)
         root.setContentsMargins(20, 16, 20, 18)
@@ -217,7 +220,7 @@ class Copilot(BaseDialog):
         self.live.setOpenLinks(False)
         self.live.setStyleSheet("QTextBrowser { font-size: 13px; }")
         self.live.setPlaceholderText("The conversation appears here once the meeting starts.")
-        self.live.setMinimumHeight(80)
+        self.live.setMinimumHeight(48)                # small laptops: it scrolls rather than pushing off-screen
         lay.addWidget(self.live, 1)
         self.partial_lab = label("", "muted")
         self.partial_lab.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
@@ -249,7 +252,7 @@ class Copilot(BaseDialog):
         card, lay = _card(4)
         lay.addWidget(_card_header("Answer", self.badge))
         self.answer = _flat_text("Press Assist or a quick action. Answers appear here.", 15)
-        self.answer.setMinimumHeight(110)
+        self.answer.setMinimumHeight(64)
         self.answer.textChanged.connect(self.c.schedule_publish)    # new answers reach the phone at once
         lay.addWidget(self.answer, 1)
         tools = QHBoxLayout()
@@ -609,7 +612,6 @@ class Copilot(BaseDialog):
         self.compact = bool(on)
         for w in (self.mode_row, self.transcript_card, self.chips_row, self.ask_row, self.opts_row):
             w.setVisible(not on)
-        self.answer.setMinimumHeight(64 if on else 110)
         self.compact_btn.setIcon(icons.icon("plus" if on else "minus", "#C9CFDD", 14))
         self.compact_btn.setToolTip(("Full view" if on else "Compact bar") + "  (Ctrl+B)")
         if on:
@@ -619,7 +621,7 @@ class Copilot(BaseDialog):
             self.layout().activate()
             self.resize(max(440, min(self.width(), 520)), self.layout().totalMinimumSize().height() + 60)
         else:
-            self.setMinimumSize(540, 700)
+            self.setMinimumSize(*FULL_MIN)
             size = self._full_size
             self.resize(size if size is not None else self.size().expandedTo(self.minimumSize()))
         if save:

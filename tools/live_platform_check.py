@@ -1,6 +1,6 @@
 """Live, real-screen test of a fresh install: glass on every window, a copilot meeting through Whisper, hide-all.
 
-    python tools/live_platform_test.py [out_dir]
+    python tools/live_platform_check.py [out_dir]
 
 Needs a desktop session (not offscreen) and speakers: it plays meeting lines with the Windows voice. Glass is
 measured, not eyeballed: a pure red window sits behind each window and the screen pixels inside it are read back.
@@ -194,6 +194,44 @@ check("Hide-all hides every window", not any(w.isVisible() for w in mine), "%d w
 ctl.toggle_everything()
 pump(0.6)
 check("Hide-all brings them all back", all(w.isVisible() for w in mine))
+
+# ----------------------------------------------------------------- resize grips belong to the window (Windows)
+if sys.platform == "win32":
+    # Windows gives clicks on fully transparent pixels to the window behind. A rounded corner left transparent can't
+    # be grabbed to resize, so ask the OS who owns each corner and edge pixel (without moving the user's mouse).
+    ASK = r"""
+import ctypes, ctypes.wintypes as wt, sys
+u = ctypes.windll.user32
+u.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4))
+u.WindowFromPoint.restype = wt.HWND
+u.GetAncestor.restype = wt.HWND
+pts = [int(float(v)) for v in sys.argv[1:]]
+for i in range(0, len(pts), 2):
+    print(hex(u.GetAncestor(u.WindowFromPoint(wt.POINT(pts[i], pts[i + 1])), 2) or 0))
+"""
+    ratio = screen.devicePixelRatio()
+
+    def grips_check(label, w):
+        w.show()
+        w.raise_()
+        pump(0.6)
+        g = w.frameGeometry()
+        spots = [(g.right() - 1, g.bottom() - 1), (g.left() + 1, g.top() + 1), (g.right() - 1, g.top() + 1),
+                 (g.left() + 1, g.bottom() - 1), (g.right() - 2, g.center().y()), (g.center().x(), g.bottom() - 2)]
+        args = [str(v * ratio) for xy in spots for v in xy]
+        owners = subprocess.run([sys.executable, "-c", ASK] + args, capture_output=True, text=True).stdout.split()
+        mine = hex(int(w.winId()))
+        check("%s corners and edges can be grabbed" % label, owners == [mine] * len(spots),
+              "%d of %d" % (sum(o == mine for o in owners), len(spots)))
+
+    ctl.open_settings()
+    pump(0.8)
+    grips_check("Settings", ctl.settings_win)
+    ctl.settings_win.hide()
+    grips_check("Copilot", cop)
+    cop.hide()
+    ctl.prompter.show_window()
+    grips_check("Prompter", ctl.prompter)
 
 red.close()
 print("\nRESULT: %s (%d/%d)   screenshots: %s" % ("OK" if all(results) else "FAIL", sum(results), len(results), out))

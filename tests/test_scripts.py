@@ -109,7 +109,15 @@ def test_title_from_filename():
 
 def test_markdown_import_stays_fast_on_pathological_brackets():
     import time
-    t = time.time()
-    scripts._strip_markdown("[" * 60000 + "![" * 30000)
-    assert time.time() - t < 3
+
+    def cost(n):                                    # best of two, so a busy CI machine doesn't add noise
+        best = 9e9
+        for _ in range(2):
+            t = time.perf_counter()
+            scripts._strip_markdown("[" * n + "![" * (n // 2))
+            best = min(best, time.perf_counter() - t)
+        return best
+    small, big = cost(30000), cost(120000)
+    # 4x the input must cost about 4x, not 16x: a regex that backtracks grows quadratically on any machine
+    assert big < 8 * small + 0.05, (small, big)
     assert scripts._strip_markdown("see [the docs](http://x.y) ok") == "see the docs ok"
