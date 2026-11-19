@@ -1,8 +1,9 @@
 """Phone pairing dialog."""
 from PySide6.QtCore import QRectF, Qt
-from PySide6.QtGui import QColor, QGuiApplication, QPainter
+from PySide6.QtGui import QColor, QCursor, QGuiApplication, QPainter
 from PySide6.QtWidgets import QHBoxLayout, QLineEdit, QVBoxLayout, QWidget
 
+from .. import glass
 from .common import BaseDialog, button, label
 
 try:
@@ -77,7 +78,9 @@ class PhoneDialog(BaseDialog):
                                 "the meeting copilot.", "muted", True))
             row = QHBoxLayout()
             row.addStretch(1)
-            row.addWidget(QrWidget(url))
+            screen = QGuiApplication.screenAt(QCursor.pos()) or QGuiApplication.primaryScreen()
+            short = glass.usable_rect(screen).height() < 720 if screen else False
+            row.addWidget(QrWidget(url, 170 if short else 220))   # small laptops: still scans, and the dialog fits
             row.addStretch(1)
             lay.addLayout(row)
             lay.addWidget(label("Or open this address and enter the PIN", "muted"))
