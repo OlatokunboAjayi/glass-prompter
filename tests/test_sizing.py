@@ -1,5 +1,6 @@
 """Every window must fit, uncut, on the screens people actually have, including small laptops at 125-150% scaling."""
 import os
+import sys
 import tempfile
 
 import pytest
@@ -52,7 +53,11 @@ def _windows(ctl):
     yield "AI assistant", make_assistant(ctl)
 
 
-@pytest.mark.parametrize("screen", list(SCREENS))
+NETBOOK_ON_MAC = pytest.mark.skipif(sys.platform == "darwin", reason="no Mac has a 600-pixel-tall screen; the smallest "
+                                    "(11-inch MacBook Air) leaves ~670 points, covered by the 1366x768 case")
+
+
+@pytest.mark.parametrize("screen", [pytest.param(s, marks=NETBOOK_ON_MAC) if "netbook" in s else s for s in SCREENS])
 def test_every_window_fits_uncut(ctl, monkeypatch, screen):
     from glassprompter.ui import glass
     area = SCREENS[screen]
